@@ -2,3 +2,4 @@ node_modules
 samconfig.toml
 testdata.mp4
 sa-pro.png
+.aws-sam
