@@ -1,0 +1,36 @@
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+  MyBucket:
+    Type: AWS::S3::Bucket
+  MyLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .
+      Handler: index.handler
+      Runtime: nodejs16.x
+      Environment:
+        Variables:
+          BUCKET_NAME: !Ref MyBucket
+      Policies:
+        - S3CrudPolicy:
+            BucketName: !Ref MyBucket    
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /upload
+            Method: post
+            RestApiId: !Ref ServerlessRestApi
+  ServerlessRestApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: prod
+
+Outputs:
+  ApiEndpoint:
+    Description: "API Gateway endpoint URL for Prod stage"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/prod"
+  BucketName:
+    Description: "S3 bucket name"
+    Value: !Ref MyBucket
