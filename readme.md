@@ -11,6 +11,12 @@ Deploy infrastructure
 
 Then use the client app to upload the files. The client is the client.js file
 
+First do an npm install
+
+```npm install``` 
+
+then you can use the client
+
 ```node client.js```
 
 Make sure to change the following things in the client:
